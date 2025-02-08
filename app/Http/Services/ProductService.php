@@ -2,8 +2,8 @@
 
 namespace App\Http\Services;
 
-use App\Http\DataTransferObjects\Product\UpdateProductDTO;
 use App\Http\DataTransferObjects\Product\StoreProductDTO;
+use App\Http\DataTransferObjects\Product\UpdateProductDTO;
 use App\Http\Services\Interfaces\ProductServiceInterface;
 use App\Models\Product;
 use Illuminate\Pagination\AbstractPaginator;

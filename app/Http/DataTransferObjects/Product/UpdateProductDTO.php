@@ -2,9 +2,7 @@
 
 namespace App\Http\DataTransferObjects\Product;
 
-use App\Http\DataTransferObjects\ProductDTO;
 use App\Http\Requests\Api\V1\Product\UpdateProductRequest;
-use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateProductDTO
 {
