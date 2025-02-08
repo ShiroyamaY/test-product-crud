@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
-use App\Http\DataTransferObjects\ProductDTO;
+use App\Http\DataTransferObjects\Product\StoreProductDTO;
+use App\Http\DataTransferObjects\Product\UpdateProductDTO;
 use App\Http\Requests\Api\V1\Product\StoreProductRequest;
 use App\Http\Requests\Api\V1\Product\UpdateProductRequest;
 use App\Http\Resources\Api\V1\Product\ProductCollection;
@@ -34,11 +35,11 @@ class ProductController extends Controller
     public function store(StoreProductRequest $request): ProductStoreResource|JsonResponse
     {
         $createdProduct = $this->productService->store(
-            ProductDTO::fromRequest($request)
+            StoreProductDTO::fromRequest($request)
         );
 
         return $createdProduct
-            ? ProductStoreResource::make($createdProduct)
+            ? ProductStoreResource::make($createdProduct)->response()->setStatusCode(201)
             : Response::json('Product was not created', 500);
     }
 
@@ -51,7 +52,7 @@ class ProductController extends Controller
     {
         $updatedProduct = $this->productService->update(
             $product,
-            ProductDTO::fromRequest($request)
+            UpdateProductDTO::fromRequest($request)
         );
 
         return $updatedProduct

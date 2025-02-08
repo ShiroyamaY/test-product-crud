@@ -2,6 +2,8 @@
 
 namespace App\Http\Services\Interfaces;
 
+use App\Http\DataTransferObjects\Product\StoreProductDTO;
+use App\Http\DataTransferObjects\Product\UpdateProductDTO;
 use App\Http\DataTransferObjects\ProductDTO;
 use App\Models\Product;
 use Illuminate\Pagination\AbstractPaginator;
@@ -9,7 +11,7 @@ use Illuminate\Pagination\AbstractPaginator;
 interface ProductServiceInterface
 {
     public function index(): AbstractPaginator;
-    public function store(ProductDTO $productDTO): ?Product;
-    public function update(Product $product, ProductDTO $productDTO): ?Product;
+    public function store(StoreProductDTO $storeProductDTO): ?Product;
+    public function update(Product $product, UpdateProductDTO $updateProductDTO): ?Product;
     public function destroy(Product $product): ?Product;
 }

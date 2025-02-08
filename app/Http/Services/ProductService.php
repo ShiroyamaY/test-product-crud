@@ -2,9 +2,8 @@
 
 namespace App\Http\Services;
 
-use App\Http\DataTransferObjects\Product\UpdateDTO;
-use App\Http\DataTransferObjects\ProductDto;
-use App\Http\DataTransferObjects\StoreDTO;
+use App\Http\DataTransferObjects\Product\UpdateProductDTO;
+use App\Http\DataTransferObjects\Product\StoreProductDTO;
 use App\Http\Services\Interfaces\ProductServiceInterface;
 use App\Models\Product;
 use Illuminate\Pagination\AbstractPaginator;
@@ -16,26 +15,30 @@ class ProductService implements ProductServiceInterface
         return Product::query()->paginate(10);
     }
 
-    public function store(ProductDTO $productDTO): ?Product
+    public function store(StoreProductDTO $storeProductDTO): ?Product
     {
         $product = new Product([
-            'name' => $productDTO->name,
-            'description' => $productDTO->description,
-            'price' => $productDTO->price,
+            'name' => $storeProductDTO->name,
+            'description' => $storeProductDTO->description,
+            'price' => $storeProductDTO->price,
         ]);
 
         return $product->save() ? $product : null;
     }
 
-    public function update(Product $product, ProductDTO $productDTO): ?Product
+    public function update(Product $product, UpdateProductDTO $updateProductDTO): ?Product
     {
-        $result = $product->update([
-            'name' => $productDTO->name,
-            'description' => $productDTO->description,
-            'price' => $productDTO->price
-        ]);
+        $updatedData = collect([
+            'name' => $updateProductDTO->name,
+            'description' => $updateProductDTO->description,
+            'price' => $updateProductDTO->price,
+        ])->filter()->toArray();
 
-        return $result ? $product : null;
+        if (!$updatedData) {
+            return $product;
+        }
+
+        return $product->update($updatedData) ? $product : null;
     }
 
     public function destroy(Product $product): ?Product

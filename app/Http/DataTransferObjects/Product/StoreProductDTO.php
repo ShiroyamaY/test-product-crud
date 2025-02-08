@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Http\DataTransferObjects;
+namespace App\Http\DataTransferObjects\Product;
 
+use App\Http\DataTransferObjects\ProductDTO;
+use App\Http\Requests\Api\V1\Product\StoreProductRequest;
 use Illuminate\Foundation\Http\FormRequest;
 
-class ProductDTO
+class StoreProductDTO
 {
     private function __construct(
         public string $name,
@@ -14,10 +16,10 @@ class ProductDTO
     {}
 
     public static function fromRequest(
-        FormRequest $request
-    ): ProductDTO
+        StoreProductRequest $request
+    ): StoreProductDTO
     {
-        return new ProductDTO(
+        return new StoreProductDTO(
             $request->validated('name'),
             $request->validated('description'),
             $request->validated('price')
